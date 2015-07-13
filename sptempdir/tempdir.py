@@ -26,7 +26,7 @@ def generate_random_chain(length=12):
 	return rand_chars
 
 
-def TemporaryDirectory(suffix="", prefix="", dir=None, delete=True):
+def TemporaryDirectory(suffix='', prefix='', dir=None, delete=True):
 	if not dir or dir is None:
 		dir = gettempdir()
 

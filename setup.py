@@ -9,20 +9,20 @@ from setuptools import setup, find_packages
 # @formatter:off (pycharm - no formatting)
 try:
 	import pypandoc
-	long_description = pypandoc.convert('README.md', 'rst')
+	long_description_text = pypandoc.convert('README.md', 'rst')
 except Exception as e:
-	long_description = ''
+	long_description_text = ''
 
 
 setup(
 	name='sptempdir',
-	
+
 	# https://packaging.python.org/en/latest/distributing.html#version
-	version='0.1.2',
+	version='0.1.3',
 
 	keywords=['tempdir', 'sptempdir', 'temporary directory'],
 	description='This module generates temporary directories',
-	long_description = long_description,
+	long_description=long_description_text,
 
 	# The project homepage
 	url='https://github.com/sefikail/sptempdir/',
@@ -45,7 +45,7 @@ setup(
 		'Programming Language :: Python :: 3.3',
 		'Programming Language :: Python :: 3.4',
 	],
-	
+
 	# License
 	license="See: https://creativecommons.org/licenses/by/3.0/",
 )
