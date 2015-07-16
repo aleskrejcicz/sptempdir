@@ -79,6 +79,8 @@ class TemporaryDirectoryWrapper:
 						self.rm_error_access = str(e)
 						if self.os_platform == "Windows":
 							call(['cmd', '/c', 'rmdir', '/s', '/q', self.tempdir], shell=False)
+						else:
+							raise e
 					else:
 						raise e
 				finally:
