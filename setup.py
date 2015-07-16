@@ -18,7 +18,7 @@ setup(
 	name='sptempdir',
 
 	# https://packaging.python.org/en/latest/distributing.html#version
-	version='0.1.3',
+	version='0.1.4',
 
 	keywords=['tempdir', 'sptempdir', 'temporary directory'],
 	description='This module generates temporary directories',

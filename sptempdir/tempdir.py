@@ -6,6 +6,8 @@
 
 import os
 import errno
+from platform import system
+from subprocess import call
 from random import choice
 from shutil import rmtree
 from tempfile import gettempdir
@@ -13,14 +15,15 @@ from tempfile import gettempdir
 
 TMP_MAX = 10000
 
-# @formatter:off (pycharm - no formatting)
-characters = {
-	'letters': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-	'digits': '0123456789'
-}
-# @formatter:on (pycharm - no formatting)
 
 def generate_random_chain(length=12):
+	# @formatter:off (pycharm - no formatting)
+	characters = {
+		'letters': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		'digits': '0123456789'
+	}
+	# @formatter:on (pycharm - no formatting)
+
 	all_chars = ''.join(str(x) for x in characters.values())  # All the characters in one variable
 	rand_chars = ''.join(choice(all_chars) for x in range(length))  # Generate random characters
 	return rand_chars
@@ -41,7 +44,7 @@ def TemporaryDirectory(suffix='', prefix='', dir=None, delete=True):
 				raise e
 		else:
 			return TemporaryDirectoryWrapper(tempdir, delete)
-	raise Exception('Cannot create temp directory "%s".' % tempdir)
+	raise Exception('Cannot create temporary directory "%s".' % tempdir)
 
 
 class TemporaryDirectoryWrapper:
@@ -49,9 +52,12 @@ class TemporaryDirectoryWrapper:
 		self.tempdir = tempdir
 		self.delete = delete
 		self.rmtemp_called = False
+		#
+		self.os_platform = system()
+		self.rm_error_access = None
 
 		if not os.path.exists(tempdir):
-			raise Exception('Cannot find temp directory "%s".' % tempdir)
+			raise Exception('Cannot find temporary directory "%s".' % tempdir)
 
 	def __enter__(self):
 		return self
@@ -66,9 +72,18 @@ class TemporaryDirectoryWrapper:
 		if not self.rmtemp_called:
 			self.rmtemp_called = True
 			if self.delete and os.path.exists(self.tempdir):
-				rmtree(self.tempdir)
-				if os.path.exists(self.tempdir):
-					raise Exception('Cannot remove temp directory "%s".' % self.tempdir)
+				try:
+					rmtree(self.tempdir)
+				except Exception as e:
+					if e.errno == errno.EACCES:
+						self.rm_error_access = str(e)
+						if self.os_platform == "Windows":
+							call(['cmd', '/c', 'rmdir', '/s', '/q', self.tempdir], shell=False)
+					else:
+						raise e
+				finally:
+					if os.path.exists(self.tempdir):
+						raise Exception('Cannot remove temporary directory "%s", "%s"' % (self.tempdir, self.rm_error_access))
 
 	@property
 	def name(self):
