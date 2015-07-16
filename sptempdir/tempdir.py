@@ -13,7 +13,7 @@ from shutil import rmtree
 from tempfile import gettempdir
 
 
-TMP_MAX = 10000
+TMP_MAX = 10000  # Try again, max number
 
 
 def generate_random_chain(length=12):
