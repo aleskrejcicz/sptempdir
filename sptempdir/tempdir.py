@@ -30,7 +30,6 @@ class TemporaryDirectoryWrapper:
 	def __init__(self, tempdir, delete=True):
 		self.tempdir = tempdir
 		self.delete = delete
-		self.rmtemp_called = False
 
 	def __enter__(self):
 		return self
@@ -42,17 +41,15 @@ class TemporaryDirectoryWrapper:
 		self.rmtemp()
 
 	def rmtemp(self):
-		if not self.rmtemp_called:
-			self.rmtemp_called = True
-			if self.delete and os.path.exists(self.tempdir):
-				try:
-					rmtree(self.tempdir)
-				except Exception as e:
-					if e.errno == errno.EACCES:
-						if notremoved(self.tempdir):
-							raise IOError(errno.EACCES, 'Cannot remove temporary directory "%s".' % self.tempdir)
-					else:
-						raise e
+		if self.delete and os.path.exists(self.tempdir):
+			try:
+				rmtree(self.tempdir)
+			except Exception as e:
+				if e.errno == errno.EACCES:
+					if notremoved(self.tempdir):
+						raise IOError(errno.EACCES, 'Cannot remove temporary directory "%s".' % self.tempdir)
+				else:
+					raise e
 
 	@property
 	def name(self):
