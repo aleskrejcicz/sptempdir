@@ -24,7 +24,7 @@ print('Outside:', os.path.exists(temp.name))
 
 *Terminal output:*
 
-	$ test_create_tempdir.py
+	$ create_tempdir.py
 	temp.name: /tmp/prefbegin_66XxiFkN6Nm4_suffend
 	Inside: True
 	Outside: False
@@ -46,7 +46,7 @@ print('Tempdir exists:', os.path.exists(temp.name))
 
 *Terminal output:*
 
-	$ test_create_tempdir.py
+	$ create_tempdir.py
 	temp.name: /tmp/RCgAzfsATQnb
 	Tempdir exists: True
 	Tempdir exists: False
@@ -70,7 +70,7 @@ print('Tempdir exists:', os.path.exists(temp.name))
 
 *Terminal output:*
 
-	$ test_create_tempdir.py
+	$ create_tempdir.py
 	temp.name: /tmp/kWwCWn42NRsr
 	Tempdir exists: True
 	Tempdir exists: True
@@ -89,7 +89,7 @@ print(temp.name)  # retrieve the name temporary directory
 
 *Terminal output:*
 
-	$ test_create_tempdir.py
+	$ create_tempdir.py
 	/home/user/Desktop/4ZdTvLNqVuyE
 
 
