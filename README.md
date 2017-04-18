@@ -13,18 +13,18 @@ The `name` property returns the name of a temporary directory.
 
 ```python
 import os
-import sptempdir
+from sptempdir import TemporaryDirectory
 
-with sptempdir.TemporaryDirectory(prefix="prefbegin_", suffix="_suffend") as temp:
+with TemporaryDirectory(prefix="prefbegin_", suffix="_suffend") as temp:
 	print('temp.name:', temp.name)  # retrieve the name temporary directory
 	print('Inside:', os.path.exists(temp.name))
-
-print('Outside:', os.path.exists(temp.name))	
+	
+print('Outside:', os.path.exists(temp.name))
 ```
 
 *Terminal output:*
 
-	$ create_tempdir.py
+	$ temporary_directory.py
 	temp.name: /tmp/prefbegin_66XxiFkN6Nm4_suffend
 	Inside: True
 	Outside: False
@@ -34,9 +34,9 @@ print('Outside:', os.path.exists(temp.name))
 
 ```python
 import os
-import sptempdir
+from sptempdir import TemporaryDirectory
 
-temp = sptempdir.TemporaryDirectory()
+temp = TemporaryDirectory()
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
@@ -46,7 +46,7 @@ print('Tempdir exists:', os.path.exists(temp.name))
 
 *Terminal output:*
 
-	$ create_tempdir.py
+	$ temporary_directory.py
 	temp.name: /tmp/RCgAzfsATQnb
 	Tempdir exists: True
 	Tempdir exists: False
@@ -58,9 +58,9 @@ If the delete parameter is `delete=False`, the temp directory is not deleted.
 
 ```python
 import os
-import sptempdir
+from sptempdir import TemporaryDirectory
 
-temp = sptempdir.TemporaryDirectory(delete=False)
+temp = TemporaryDirectory(delete=False)
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
@@ -70,40 +70,42 @@ print('Tempdir exists:', os.path.exists(temp.name))
 
 *Terminal output:*
 
-	$ create_tempdir.py
+	$ temporary_directory.py
 	temp.name: /tmp/kWwCWn42NRsr
 	Tempdir exists: True
-	Tempdir exists: True
+	Tempdir exists: False
 
 
 ### Example 4:
 
-Specific path where you want to create temporary directory.
+Specific `dir` where you want to create temporary directory.
 
 ```python
-import sptempdir
+from sptempdir import TemporaryDirectory
 
-temp = sptempdir.TemporaryDirectory(dir="/home/user/Desktop")
+temp = TemporaryDirectory(dir="/home/user/Desktop")
 print(temp.name)  # retrieve the name temporary directory
 ```
 
 *Terminal output:*
 
-	$ create_tempdir.py
+	$ temporary_directory.py
 	/home/user/Desktop/4ZdTvLNqVuyE
 
 
 ### Installation:
 
 	pip install sptempdir
-	# or
-	pip install https://github.com/sefikail/sptempdir/tarball/master
 
 
 ### License:
 
-	https://creativecommons.org/licenses/by/3.0/
+	BSD
 
 -----------------------
 
-(SP)TEMPDIR = **( S**[efikail](http://sefikail.cz) + **P**[ython](http://python.org) **)** + **TEMPDIR**
+(SP)TEMPDIR = **( S**imple **P**ython **)** **TEMPDIR**
+
+-----------------------
+
+[![Travis](https://img.shields.io/travis/aleskrejcicz/sptempdir/master.svg)]() [![PyPI](https://img.shields.io/pypi/v/sptempdir.svg)]() [![PyPI](https://img.shields.io/pypi/pyversions/sptempdir.svg)]() [![PyPI](https://img.shields.io/pypi/l/sptempdir.svg)]()

@@ -2,51 +2,49 @@
 
 from setuptools import setup, find_packages
 
+from sptempdir import __version__, __git_url__
 
-# Upload pypi:
-# python setup.py sdist --formats=gztar upload
 
-# @formatter:off (pycharm - no formatting)
 try:
-	import pypandoc
-	long_description_text = pypandoc.convert('README.md', 'rst')
+	with open('PYPI_README.rst', 'r') as f:
+		pypi_web_description = f.read()
 except Exception as e:
-	long_description_text = ''
-
+	pypi_web_description = ''
 
 setup(
 	name='sptempdir',
 
 	# https://packaging.python.org/en/latest/distributing.html#version
-	version='0.1.4',
+	version=__version__,
 
-	keywords=['tempdir', 'sptempdir', 'temporary directory'],
+	keywords=['tempdir', 'sptempdir', 'temporary directory', 'directory', 'temporary'],
 	description='This module generates temporary directories',
-	long_description=long_description_text,
+	long_description=pypi_web_description,
 
 	# The project homepage
-	url='https://github.com/sefikail/sptempdir/',
+	url=__git_url__,
 
 	# Author details
-	author='sefikail',
+	author='Ales Krejci',
 	author_email='aleskrejcicz@gmail.com',
 
-	packages=find_packages(exclude=['docs', 'tests', 'examples']),
+	packages=find_packages(exclude=['docs', 'tests']),
 	include_package_data=True,
-
+	license="BSD",
 	platforms='any',
+
 	# https://packaging.python.org/en/latest/distributing.html#classifiers
 	classifiers=[
-		'Programming Language :: Python :: 2',
-		'Programming Language :: Python :: 2.6',
+		# License:
+		'License :: OSI Approved :: BSD License',
+
+		# Python versions:
+		'Programming Language :: Python',
 		'Programming Language :: Python :: 2.7',
-		'Programming Language :: Python :: 3',
 		'Programming Language :: Python :: 3.2',
 		'Programming Language :: Python :: 3.3',
 		'Programming Language :: Python :: 3.4',
-	],
-
-	# License
-	license="See: https://creativecommons.org/licenses/by/3.0/",
+		'Programming Language :: Python :: 3.5',
+		'Programming Language :: Python :: 3.6',
+	]
 )
-# @formatter:on (pycharm - no formatting)
