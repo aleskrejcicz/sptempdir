@@ -25,7 +25,7 @@ temp = TemporaryDirectory()
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
-temp.rmtemp()  # manually remove temporary directory
+temp.remove()  # manually remove temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
 #
@@ -37,7 +37,7 @@ temp = TemporaryDirectory(delete=False)
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
-temp.rmtemp()  # manually remove temporary directory
+temp.remove()  # manually remove temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
 #

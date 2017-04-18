@@ -13,5 +13,4 @@ install:
   - python setup.py -q install
 
 script:
-  - python tests/github_tag_version.py
   - python tests/temporary_directory_unittest.py

@@ -40,7 +40,7 @@ temp = TemporaryDirectory()
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
-temp.rmtemp()  # manually remove temporary directory
+temp.remove()  # manually remove temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 ```
 
@@ -64,7 +64,7 @@ temp = TemporaryDirectory(delete=False)
 print('temp.name:', temp.name)  # retrieve the name temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 
-temp.rmtemp()  # manually remove temporary directory
+temp.remove()  # manually remove temporary directory
 print('Tempdir exists:', os.path.exists(temp.name))
 ```
 
@@ -108,4 +108,4 @@ print(temp.name)  # retrieve the name temporary directory
 
 -----------------------
 
-[![Travis](https://img.shields.io/travis/aleskrejcicz/sptempdir/master.svg)]() [![PyPI](https://img.shields.io/pypi/v/sptempdir.svg)]() [![PyPI](https://img.shields.io/pypi/pyversions/sptempdir.svg)]() [![PyPI](https://img.shields.io/pypi/l/sptempdir.svg)]()
+[![Travis](https://img.shields.io/travis/aleskrejcicz/sptempdir/master.svg)](https://github.com/aleskrejcicz/sptempdir) [![PyPI](https://img.shields.io/pypi/v/sptempdir.svg)](https://pypi.python.org/pypi/sptempdir) [![PyPI](https://img.shields.io/pypi/pyversions/sptempdir.svg)](https://pypi.python.org/pypi/sptempdir) [![PyPI](https://img.shields.io/pypi/l/sptempdir.svg)](https://pypi.python.org/pypi/sptempdir)

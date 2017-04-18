@@ -13,9 +13,9 @@ with open('../../README.md', 'r') as load_file:
 		m = re.search(r'https://img.shields.io/', line)
 		if m:
 			for i, l in enumerate(line.split(' ')):
-				lm = re.search(r'(https:.*\.svg)', l)
-				ltext = r'.. image:: {svg_image}'.format(svg_image=lm.group(1))
-				itext = r'TemplateFooterLineN{}'.format(i)
+				lm = re.search(r'[(](https:.*\.svg).*(https:.*)[)]', l)
+				ltext = ".. image:: {svg_image}\n    :target: {url}".format(svg_image=lm.group(1),url=lm.group(2))
+				itext = 'TemplateFooterLineN{}'.format(i)
 				icons_dict[itext] = ltext
 				filtred_text.append(itext + "\n")
 		else:
