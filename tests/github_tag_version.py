@@ -1,10 +1,10 @@
+import json
+from pkg_resources import parse_version
+
 try:
 	from urllib2 import urlopen
 except ImportError:
 	from urllib.request import urlopen
-
-import json
-from pkg_resources import parse_version
 
 from sptempdir import __git_url__
 
