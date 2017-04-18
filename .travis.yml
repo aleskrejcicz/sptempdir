@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+install:
+  - pip install requests
+  - python setup.py -q install
+
+script:
+  - python tests/github_tag_version.py
+  - python tests/temporary_directory_unittest.py

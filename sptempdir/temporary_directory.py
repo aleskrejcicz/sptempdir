@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # =============================================================
-# Author: http://sefikail.cz
+# Author: http://aleskrejci.cz
 # =============================================================
 
 import os
@@ -19,7 +19,16 @@ def notremoved(tempdir):
 	from subprocess import call
 
 	if system() == "Windows":
-		call(['cmd', '/c', 'rmdir', '/s', '/q', tempdir], shell=False)
+		'''
+		CMD [/A | /U] [/Q] [/D] [/E:ON | /E:OFF] [/F:ON | /F:OFF] [/V:ON | /V:OFF] [[/S] [/C | /K] string]
+		/C      Carries out the command specified by string and then terminates
+		/S      Modifies the treatment of string after /C or /K (see below)
+		/Q      Turns echo off
+		'''
+		try:
+			call(['cmd', '/C', 'rmdir', '/S', '/Q', tempdir], shell=False)
+		except Exception as e:
+			pass
 
 	if os.path.exists(tempdir):
 		return True
@@ -27,27 +36,33 @@ def notremoved(tempdir):
 
 
 class TemporaryDirectoryWrapper:
-	def __init__(self, tempdir, delete=True):
+	def __init__(self, tempdir, auto_delete=True):
 		self.tempdir = tempdir
-		self.delete = delete
+		self._is_autodelete = auto_delete
 
 	def __enter__(self):
 		return self
 
 	def __exit__(self, exc_type, exc_value, exc_traceback):
-		self.rmtemp()
+		if self._is_autodelete:
+			self.remove()
 
 	def __del__(self):
-		self.rmtemp()
+		if self._is_autodelete:
+			self.remove()
 
 	def rmtemp(self):
-		if self.delete and os.path.exists(self.tempdir):
+		# NOTE: Backward compatibility
+		self.remove()
+
+	def remove(self):
+		if os.path.exists(self.tempdir):
 			try:
 				rmtree(self.tempdir)
 			except Exception as e:
 				if e.errno == errno.EACCES:
 					if notremoved(self.tempdir):
-						raise IOError(errno.EACCES, 'Cannot remove temporary directory "%s".' % self.tempdir)
+						raise IOError(errno.EACCES, 'Cannot remove temporary directory "{}".'.format(self.tempdir))
 				else:
 					raise e
 
@@ -57,12 +72,10 @@ class TemporaryDirectoryWrapper:
 
 
 def generate_random_chain(length=12):
-	# @formatter:off (pycharm - no formatting)
 	characters = {
 		'letters': 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 		'digits': '0123456789'
 	}
-	# @formatter:on (pycharm - no formatting)
 
 	all_chars = ''.join(str(x) for x in characters.values())  # All the characters in one variable
 	rand_chars = ''.join(choice(all_chars) for x in range(length))  # Generate random characters
@@ -73,6 +86,10 @@ def TemporaryDirectory(suffix='', prefix='', dir=None, delete=True):
 	if not dir or dir is None:
 		dir = gettempdir()
 
+	if not os.path.exists(dir):
+		raise IOError(errno.EEXIST, 'Directory "{}" not exists.'.format(dir))
+
+	tempdir = None
 	for i in range(TMP_MAX, 0, -1):
 		tempdir = os.path.join(dir, prefix + generate_random_chain() + suffix)
 		try:
@@ -85,4 +102,6 @@ def TemporaryDirectory(suffix='', prefix='', dir=None, delete=True):
 		else:
 			return TemporaryDirectoryWrapper(tempdir, delete)
 
-	raise IOError(errno.EEXIST, 'Cannot create temporary directory "%s".' % tempdir)
+	if tempdir:
+		raise IOError(errno.EEXIST, 'Cannot create temporary directory "{}".'.format(tempdir))
+	raise IOError(errno.EEXIST, 'Cannot create temporary directory in "{}".'.format(dir))

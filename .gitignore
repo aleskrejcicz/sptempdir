@@ -3,7 +3,7 @@
 /nbproject/
 
 # ============================================
-# PhpStorm:
+# PyCharm:
 /.idea/
 
 # ============================================
@@ -11,10 +11,10 @@
 *.pyc
 __pycache__
 
+build/
 dist/
 *.egg-info/
 
 # ============================================
 # Other:
-/testingfolder/
-/testingfile.py
+PYPI_README.rst

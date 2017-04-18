@@ -1,0 +1,7 @@
+# Upload pypi:
+
+# python setup.py register -r pypitest
+# python setup.py sdist --formats=gztar upload -r pypitest
+#
+# python setup.py register -r pypi
+# python setup.py sdist --formats=gztar upload -r pypi
